@@ -4,22 +4,30 @@
 const list = ['diamond', 'paper-plane-o', 'anchor', 'bolt', 'cube', 'leaf', 'bicycle', 'bomb', 'diamond', 'paper-plane-o', 'anchor', 'bolt', 'cube', 'leaf', 'bicycle', 'bomb'];
 
 /*
- * Declare all variables
+ * Declare all other global variables
  */
 const deck = document.querySelector('.deck');
 const cards = document.getElementsByClassName('card');
 const restartButton = document.querySelector('.restart');
+const starsRating = document.querySelector('.stars');
+let clicks = document.querySelector('.moves');
 let newList = shuffle(list);
+let firstStar;
 let openCards = [];
 let matchedCards = [];
+let clickedCards = [];
+deck.innerHTML = "";
+clicks.innerHTML = 0;
+allocateNewClasses();
 
 
 restartButton.addEventListener('click', function(event) {
     deck.innerHTML = "";
+    clicks.innerHTML = 0;
     allocateNewClasses();
     return newList;
-    
 })
+
 
 /*
  * Display the cards on the page
@@ -65,6 +73,9 @@ deck.addEventListener ('click', function(event) {
     if (event.target.className === "card" && openCards.length < 2) {
         displayCard(event);
         addToOpenCards(event);
+        removeFirstStar();
+        removeSecondStar();
+        removeThirdStar();
         playerWins(matchedCards);
     }
     else {
@@ -79,7 +90,9 @@ function displayCard(event){
 
 function addToOpenCards (event) {
     openCards.push(event.target);
+    clickedCards.push(event.target);
     if (openCards.length === 2) {
+        clicks.innerHTML = clickedCards.length / 2;
         checkIfMatch(openCards);
     }
 }
@@ -96,12 +109,42 @@ function checkIfMatch(openCards) {
             openCards[0].className = "card";
             openCards[1].className = "card";
             openCards.length = 0;
-            }, 1000);
+            }, 500);
         }
 };
 
+/* 
+ * This 'modal' will be replaced later on 
+ */
 function playerWins(matchedCards) {
     if (matchedCards.length === 8) {
         alert('You win!!');
     }
+};
+
+/* 
+ * Star Rating - remove one star after 10 moves, another star after 12 moves,and another after 14 moves
+ */
+function removeFirstStar() {
+    firstStar = starsRating.firstElementChild;
+    if (clickedCards.length === 20 && starsRating.children.length === 3) {
+        firstStar.remove();
+        firstStar = starsRating.firstElementChild;
+    };
+}
+
+function removeSecondStar() {
+    firstStar = starsRating.firstElementChild;
+    if (clickedCards.length === 24 && starsRating.children.length === 2) {
+        firstStar.remove();
+        firstStar = starsRating.firstElementChild;
+    };
+}
+
+function removeThirdStar() {
+    firstStar = starsRating.firstElementChild;
+    if (clickedCards.length === 28 && starsRating.children.length === 1) {
+        firstStar.remove();
+        firstStar = starsRating.firstElementChild;
+    };
 }
