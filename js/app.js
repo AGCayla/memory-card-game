@@ -11,11 +11,16 @@ const cards = document.getElementsByClassName('card');
 const restartButton = document.querySelector('.restart');
 const starsRating = document.querySelector('.stars');
 let clicks = document.querySelector('.moves');
+const starsIcons = starsRating.getElementsByTagName('i');
+let minutesLabel = document.getElementById("minutes");
+let secondsLabel = document.getElementById("seconds");
 let newList = shuffle(list);
 let firstStar;
 let openCards = [];
 let matchedCards = [];
 let clickedCards = [];
+let totalSeconds = 0;
+setInterval(setTime, 1000);
 deck.innerHTML = "";
 clicks.innerHTML = 0;
 allocateNewClasses();
@@ -24,7 +29,9 @@ allocateNewClasses();
 restartButton.addEventListener('click', function(event) {
     deck.innerHTML = "";
     clicks.innerHTML = 0;
+    clickedCards = [];
     allocateNewClasses();
+    starsCount();
     return newList;
 })
 
@@ -73,9 +80,7 @@ deck.addEventListener ('click', function(event) {
     if (event.target.className === "card" && openCards.length < 2) {
         displayCard(event);
         addToOpenCards(event);
-        removeFirstStar();
-        removeSecondStar();
-        removeThirdStar();
+        starsCount();
         playerWins(matchedCards);
     }
     else {
@@ -125,26 +130,44 @@ function playerWins(matchedCards) {
 /* 
  * Star Rating - remove one star after 10 moves, another star after 12 moves,and another after 14 moves
  */
-function removeFirstStar() {
-    firstStar = starsRating.firstElementChild;
-    if (clickedCards.length === 20 && starsRating.children.length === 3) {
-        firstStar.remove();
-        firstStar = starsRating.firstElementChild;
-    };
+function starsCount() {
+    for (i = 0; i < starsIcons.length ; i++) {
+    if (clickedCards.length > 21 && clickedCards.length <= 25) {
+        starsIcons[2].className = "fa";
+    } else if (clickedCards.length > 25 && clickedCards.length <= 29) {
+        starsIcons[2].className = "fa";
+        starsIcons[1].className = "fa";
+    } else if (clickedCards.length > 29) {
+        starsIcons[2].className = "fa";
+        starsIcons[1].className = "fa";
+        starsIcons[0].className = "fa";
+    } else {
+        starsIcons[2].className = "fa fa-star";
+        starsIcons[1].className = "fa fa-star";
+        starsIcons[0].className = "fa fa-star";
+    }
 }
+};
 
-function removeSecondStar() {
-    firstStar = starsRating.firstElementChild;
-    if (clickedCards.length === 24 && starsRating.children.length === 2) {
-        firstStar.remove();
-        firstStar = starsRating.firstElementChild;
-    };
-}
-
-function removeThirdStar() {
-    firstStar = starsRating.firstElementChild;
-    if (clickedCards.length === 28 && starsRating.children.length === 1) {
-        firstStar.remove();
-        firstStar = starsRating.firstElementChild;
-    };
-}
+/* 
+ * Timing functions from https://stackoverflow.com/a/5517836
+ */
+function setTime() {
+    if (clickedCards.length > 0 ) {
+    ++totalSeconds;
+    secondsLabel.innerHTML = pad(totalSeconds % 60);
+    minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
+    } else {
+        secondsLabel.innerHTML = "00";
+        minutesLabel.innerHTML = "00";
+    }
+  }
+  
+  function pad(val) {
+    var valString = val + "";
+    if (valString.length < 2) {
+      return "0" + valString;
+    } else {
+      return valString;
+    }
+  }
