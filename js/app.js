@@ -30,6 +30,7 @@ restartButton.addEventListener('click', function(event) {
     deck.innerHTML = "";
     clicks.innerHTML = 0;
     clickedCards = [];
+    shuffle(list);
     allocateNewClasses();
     starsCount();
     return newList;
@@ -82,6 +83,7 @@ deck.addEventListener ('click', function(event) {
         addToOpenCards(event);
         starsCount();
         playerWins(matchedCards);
+        killTimer();
     }
     else {
         event.stopPropagation();
@@ -123,7 +125,7 @@ function checkIfMatch(openCards) {
  */
 function playerWins(matchedCards) {
     if (matchedCards.length === 8) {
-        alert('You win!!');
+        alert('You win!! You have completed the game in ' + minutesLabel.innerHMTL + ' minutes and ' + secondsLabel.innerHTML + ' seconds. For this, you have been awarded ' + starsIcons.length + ' stars!!!');
     }
 };
 
@@ -150,7 +152,7 @@ function starsCount() {
 };
 
 /* 
- * Timing functions from https://stackoverflow.com/a/5517836
+ * Timer function from https://stackoverflow.com/a/5517836
  */
 function setTime() {
     if (clickedCards.length > 0 ) {
@@ -170,4 +172,11 @@ function setTime() {
     } else {
       return valString;
     }
+  }
+
+  function killTimer() {
+      let seconds = secondsLabel.innerHTML;
+      return seconds;
+      let minutes = minutesLabel.innerHTML;
+      return minutes;
   }
