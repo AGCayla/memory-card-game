@@ -10,19 +10,28 @@
 </head>
 <body>
 
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <p class="modal-text">Some text in the Modal..</p>
+        </div>
+    </div>
+
     <div class="container">
         <header>
             <h1>Match 'em Up!</h1>
         </header>
 
         <section class="score-panel">
-        	<ul class="stars">
-        		<li><i class="fa fa-star"></i></li>
-        		<li><i class="fa fa-star"></i></li>
-        		<li><i class="fa fa-star"></i></li>
-        	</ul>
+            <div>
+                <ul class="stars">
+                    <li><i class="fa fa-star"></i></li>
+                    <li><i class="fa fa-star"></i></li>
+                    <li><i class="fa fa-star"></i></li>
+                </ul>
 
-            <span class="moves">3</span> Moves
+                <span class="moves">3</span> Moves
+            </div>
             
             <div class="timer">
                 <span id="minutes">00</span>:<span id="seconds">00</span>

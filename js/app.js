@@ -14,6 +14,8 @@ let clicks = document.querySelector('.moves');
 const starsIcons = starsRating.getElementsByTagName('i');
 let minutesLabel = document.getElementById("minutes");
 let secondsLabel = document.getElementById("seconds");
+const modal = document.getElementById('myModal');
+const span = document.getElementsByClassName("close")[0];
 let newList = shuffle(list);
 let firstStar;
 let openCards = [];
@@ -21,6 +23,7 @@ let matchedCards = [];
 let clickedCards = [];
 let sec = 0;
 let timer;
+let numberOfStars;
 deck.innerHTML = "";
 clicks.innerHTML = 0;
 allocateNewClasses();
@@ -131,8 +134,9 @@ function checkIfMatch(openCards) {
  */
 function playerWins(matchedCards) {
     if (matchedCards.length === 8) {
-        alert('You win!! You have completed the game in ' + minutesLabel.innerHMTL + ' minutes and ' + secondsLabel.innerHTML + ' seconds. For this, you have been awarded ' + starsIcons.length + ' stars!!!');
         stopTimer();
+        setTextModal();
+        openModal();
     }
 }
 
@@ -155,6 +159,7 @@ function starsCount() {
         starsIcons[1].className = "fa fa-star";
         starsIcons[0].className = "fa fa-star";
     }
+    numberOfStars = document.getElementsByClassName('fa-star');
 }
 }
 
@@ -182,4 +187,48 @@ function pad(val) {
 function counterTimer() {
     secondsLabel.innerHTML=pad(++sec%60);
     minutesLabel.innerHTML=pad(parseInt(sec/60,10));
+}
+
+/* 
+ * Modal functions
+ */
+function openModal() {
+    modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+    deck.innerHTML = "";
+    clicks.innerHTML = 0;
+    clickedCards = [];
+    matchedCards = [];
+    shuffle(list);
+    allocateNewClasses();
+    starsCount();
+    stopTimer();
+    resetTimer();
+    return newList;
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+        deck.innerHTML = "";
+        clicks.innerHTML = 0;
+        clickedCards = [];
+        matchedCards = [];
+        shuffle(list);
+        allocateNewClasses();
+        starsCount();
+        stopTimer();
+        resetTimer();
+        return newList;
+    }
+}
+
+function setTextModal() {
+    let modalText = document.querySelector('.modal-text');
+    modalText.innerText = `Congratulations, you have completed the game in ${minutesLabel.innerHTML} minutes and ${secondsLabel.innerHTML} seconds. For that, we award you ${numberOfStars.length} stars!`;
 }
