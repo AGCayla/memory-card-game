@@ -29,7 +29,9 @@ clicks.innerHTML = 0;
 allocateNewClasses();
 
 
-
+/* 
+ * Restart Button
+ */
 restartButton.addEventListener('click', function(event) {
     deck.innerHTML = "";
     clicks.innerHTML = 0;
@@ -130,7 +132,7 @@ function checkIfMatch(openCards) {
 }
 
 /* 
- * This 'modal' will be replaced later on 
+ * When player wins
  */
 function playerWins(matchedCards) {
     if (matchedCards.length === 8) {
@@ -164,7 +166,7 @@ function starsCount() {
 }
 
 /* 
- * Timer function from https://stackoverflow.com/a/7910506
+ * Timer function inspired from https://stackoverflow.com/a/7910506
  */
 function startTimer() {
     timer = setInterval(counterTimer,1000);
