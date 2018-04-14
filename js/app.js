@@ -4,7 +4,7 @@
 const list = ['diamond', 'paper-plane-o', 'anchor', 'bolt', 'cube', 'leaf', 'bicycle', 'bomb', 'diamond', 'paper-plane-o', 'anchor', 'bolt', 'cube', 'leaf', 'bicycle', 'bomb'];
 
 /*
- * Declare all other global variables
+ * Declare all other global variables and initial functions
  */
 const deck = document.querySelector('.deck');
 const cards = document.getElementsByClassName('card');
@@ -19,20 +19,24 @@ let firstStar;
 let openCards = [];
 let matchedCards = [];
 let clickedCards = [];
-let totalSeconds = 0;
-setInterval(setTime, 1000);
+let sec = 0;
+let timer;
 deck.innerHTML = "";
 clicks.innerHTML = 0;
 allocateNewClasses();
+
 
 
 restartButton.addEventListener('click', function(event) {
     deck.innerHTML = "";
     clicks.innerHTML = 0;
     clickedCards = [];
+    matchedCards = [];
     shuffle(list);
     allocateNewClasses();
     starsCount();
+    stopTimer();
+    resetTimer();
     return newList;
 })
 
@@ -83,7 +87,9 @@ deck.addEventListener ('click', function(event) {
         addToOpenCards(event);
         starsCount();
         playerWins(matchedCards);
-        killTimer();
+        if (clickedCards.length === 1) {
+            startTimer();
+        }
     }
     else {
         event.stopPropagation();
@@ -95,7 +101,7 @@ function displayCard(event){
     event.target.classList.toggle('show');
 }
 
-function addToOpenCards (event) {
+function addToOpenCards(event) {
     openCards.push(event.target);
     clickedCards.push(event.target);
     if (openCards.length === 2) {
@@ -118,7 +124,7 @@ function checkIfMatch(openCards) {
             openCards.length = 0;
             }, 500);
         }
-};
+}
 
 /* 
  * This 'modal' will be replaced later on 
@@ -126,8 +132,9 @@ function checkIfMatch(openCards) {
 function playerWins(matchedCards) {
     if (matchedCards.length === 8) {
         alert('You win!! You have completed the game in ' + minutesLabel.innerHMTL + ' minutes and ' + secondsLabel.innerHTML + ' seconds. For this, you have been awarded ' + starsIcons.length + ' stars!!!');
+        stopTimer();
     }
-};
+}
 
 /* 
  * Star Rating - remove one star after 10 moves, another star after 12 moves,and another after 14 moves
@@ -149,34 +156,30 @@ function starsCount() {
         starsIcons[0].className = "fa fa-star";
     }
 }
-};
+}
 
 /* 
- * Timer function from https://stackoverflow.com/a/5517836
+ * Timer function from https://stackoverflow.com/a/7910506
  */
-function setTime() {
-    if (clickedCards.length > 0 ) {
-    ++totalSeconds;
-    secondsLabel.innerHTML = pad(totalSeconds % 60);
-    minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
-    } else {
-        secondsLabel.innerHTML = "00";
-        minutesLabel.innerHTML = "00";
-    }
-  }
-  
-  function pad(val) {
-    var valString = val + "";
-    if (valString.length < 2) {
-      return "0" + valString;
-    } else {
-      return valString;
-    }
-  }
+function startTimer() {
+    timer = setInterval(counterTimer,1000);
+}
 
-  function killTimer() {
-      let seconds = secondsLabel.innerHTML;
-      return seconds;
-      let minutes = minutesLabel.innerHTML;
-      return minutes;
-  }
+function stopTimer() {
+    clearInterval(timer);
+}
+
+function resetTimer() {
+    sec = 0;
+    secondsLabel.textContent = "00";
+    minutesLabel.textContent = "00";
+}
+
+function pad(val) { 
+    return val > 9 ? val : "0" + val;
+}
+
+function counterTimer() {
+    secondsLabel.innerHTML=pad(++sec%60);
+    minutesLabel.innerHTML=pad(parseInt(sec/60,10));
+}
