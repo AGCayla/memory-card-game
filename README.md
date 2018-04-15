@@ -1,20 +1,17 @@
-# Memory Game Project
+# Welcome to the memory game!
 
 ## Table of Contents
 
 * [Instructions](#instructions)
-* [Contributing](#contributing)
+* [How to Play](#how_to_play)
+* [Dependencies](#dependencies)
 
 ## Instructions
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+Click on a card, and try to find its matching one. After flipping the first card, the timer will start and the program will start counting your moves. Flipping two cards will make one move. Each time 
 
-To get started, open `js/app.js` and start building out the app's functionality
+## How to Play
 
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
 
-## Contributing
+## Dependencies
 
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
-
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
