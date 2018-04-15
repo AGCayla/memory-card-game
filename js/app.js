@@ -37,6 +37,7 @@ restartButton.addEventListener('click', function(event) {
     clicks.innerHTML = 0;
     clickedCards = [];
     matchedCards = [];
+    openCards = [];
     shuffle(list);
     allocateNewClasses();
     starsCount();
@@ -147,15 +148,11 @@ function playerWins(matchedCards) {
  */
 function starsCount() {
     for (i = 0; i < starsIcons.length ; i++) {
-    if (clickedCards.length > 21 && clickedCards.length <= 25) {
+    if (clickedCards.length > 21 && clickedCards.length <= 29) {
         starsIcons[2].className = "fa";
-    } else if (clickedCards.length > 25 && clickedCards.length <= 29) {
-        starsIcons[2].className = "fa";
-        starsIcons[1].className = "fa";
     } else if (clickedCards.length > 29) {
         starsIcons[2].className = "fa";
         starsIcons[1].className = "fa";
-        starsIcons[0].className = "fa";
     } else {
         starsIcons[2].className = "fa fa-star";
         starsIcons[1].className = "fa fa-star";
